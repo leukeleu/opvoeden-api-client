@@ -6,3 +6,4 @@ isort
 mock
 pep8-naming
 requests-mock
+tox
