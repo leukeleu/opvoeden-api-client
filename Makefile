@@ -8,7 +8,7 @@ unittests:
 
 coveragetest: unittests
 	# Generate coverage report and require minimum coverage
-	coverage report --show-missing --fail-under 10
+	coverage report --show-missing --fail-under 95
 
 flaketest:
 	# Check syntax and style
