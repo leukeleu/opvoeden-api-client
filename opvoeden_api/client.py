@@ -1,10 +1,13 @@
 from __future__ import unicode_literals
 
-from urlparse import urljoin
-
 import requests
 
 from . import models
+
+try:
+    from urllib.parse import urljoin
+except ImportError:
+    from urlparse import urljoin
 
 BASE_URL = 'https://api.stichtingopvoeden.nl/rest/v1/'
 
