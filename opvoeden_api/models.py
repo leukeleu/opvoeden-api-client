@@ -1,6 +1,14 @@
 from __future__ import unicode_literals
 
+import posixpath
+
 from datetime import datetime
+
+try:
+    from urllib.parse import urlsplit
+except ImportError:
+    from urlparse import urlsplit
+
 
 DATE_FORMAT = '%Y%m%d'
 
@@ -39,6 +47,14 @@ class Article(object):
         self.position = position
         self.last_change_date = last_change_date
         self.canonicaltag = canonicaltag
+
+    @property
+    def path(self):
+        return urlsplit(self.canonicaltag).path
+
+    @property
+    def slug(self):
+        return posixpath.basename(self.path.rstrip('/'))
 
     @classmethod
     def from_dict(cls, data):

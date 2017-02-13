@@ -35,3 +35,17 @@ class TestModelRepr(unittest.TestCase):
             repr(obj),
             r"^Image\(image_id=1, data=..., content_type=u?'image/gif',"
             r" name=u?'pixel.gif', creation_date=...\)$")
+
+
+class TestArticle(unittest.TestCase):
+    def setUp(self):
+        self.article = models.Article(
+            external_reference=1, short_title='Example', title='Example article',
+            article_text='Example description', parent_reference='', position=1,
+            last_change_date=datetime.date.today(), canonicaltag='https://example.com/foo/bar/')
+
+    def test_path(self):
+        self.assertEqual('/foo/bar/', self.article.path)
+
+    def test_slug(self):
+        self.assertEqual('bar', self.article.slug)
