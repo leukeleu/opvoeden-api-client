@@ -29,14 +29,14 @@ class TestAPIAuthorizationHeader(unittest.TestCase):
 class TestAPIClientEndpoints(unittest.TestCase):
     def setUp(self):
         self.session = mock_session()
-        self.session.get = mock.Mock()
+        self.session.get = mock. MagicMock()
         self.client = client.Client(API_KEY, base_url='https://example.com/', session=self.session)
 
-    def test_contentset(self):
-        self.client.contentset()
+    def test_contentset_list(self):
+        self.client.contentset_list()
         self.session.get.assert_called_once_with('https://example.com/contentset')
 
-    def test_contentset_with_id(self):
+    def test_contentset(self):
         self.client.contentset(1)
         self.session.get.assert_called_once_with('https://example.com/contentset/1')
 
@@ -53,21 +53,19 @@ class TestAPIClientResponses(unittest.TestCase):
     def setUp(self):
         self.client = client.Client(API_KEY, base_url='https://example.com/')
 
-    def test_contentset(self):
+    def test_contentset_list(self):
         with requests_mock.Mocker() as m:
             m.get('https://example.com/contentset', text=utils.data('contentset_list.json'))
-            response = self.client.contentset()
+            response = self.client.contentset_list()
         self.assertTrue(
             all(isinstance(obj, models.ContentSet) for obj in response),
             'Expected response objects to be ContentSet instances')
 
-    def test_contentset_with_id(self):
+    def test_contentset(self):
         with requests_mock.Mocker() as m:
             m.get('https://example.com/contentset/1', text=utils.data('contentset_detail.json'))
             response = self.client.contentset(1)
-        self.assertTrue(
-            all(isinstance(obj, models.Article) for obj in response),
-            'Expected response objects to be Article instances')
+        self.assertIsInstance(response, models.ArticleNode)
 
     def test_article(self):
         with requests_mock.Mocker() as m:

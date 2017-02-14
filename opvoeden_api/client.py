@@ -23,14 +23,17 @@ class Client(object):
         response.raise_for_status()
         return response.json(object_hook=object_hook)
 
-    def contentset(self, contentset_id=None):
-        if contentset_id is None:
-            url = 'contentset'
-            object_hook = models.ContentSet.from_dict
-        else:
-            url = 'contentset/{}'.format(contentset_id)
-            object_hook = models.Article.from_dict
-        return self.get(url, object_hook=object_hook)
+    def contentset_list(self):
+        url = 'contentset'
+        object_hook = models.ContentSet.from_dict
+        response = self.get(url, object_hook=object_hook)
+        return response
+
+    def contentset(self, contentset_id):
+        url = 'contentset/{}'.format(contentset_id)
+        object_hook = models.Article.from_dict
+        response = self.get(url, object_hook=object_hook)
+        return models.ArticleNode.from_list(response)
 
     def article(self, external_reference):
         url = 'article/{}'.format(external_reference)
