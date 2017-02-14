@@ -22,7 +22,7 @@ class TestModelRepr(unittest.TestCase):
         obj = models.Article(
             external_reference=1, short_title='Example', title='Example article',
             article_text='Example description', parent_reference='', position=1,
-            last_change_date=datetime.date.today(), canonicaltag='https://example.com/article')
+            last_change_date=datetime.date.today(), canonicaltag='https://example.com/article/')
         self.assertRegexpMatches(
             repr(obj),
             r"^Article\(external_reference=1, short_title=u?'Example',"
