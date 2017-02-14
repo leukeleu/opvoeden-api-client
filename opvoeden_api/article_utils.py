@@ -31,3 +31,24 @@ def replace_placeholders(article_text, substitutions=None):
         return substitutions.get(match.group(1), SUBSTITUTION_DEFAULTS.get(match.group(1)))
 
     return PLACEHOLDER_MATCHER.sub(replace, article_text)
+
+
+ANCHOR_MATCHER = re.compile('\[a=([0-9]+),(.+?)\]')
+
+
+def replace_links(article_text, replacement_function):
+    """
+    Replace all internal links in the article text
+    with the return value of ``replacement_function``.
+
+    If ``replacement_function`` returns ``None``
+    no substitution will take place.
+
+    """
+    def replace(match):
+        external_id = match.group(1)
+        link_text = match.group(2)
+        replacement = replacement_function(external_id, link_text)
+        return match.group(0) if replacement is None else replacement
+
+    return ANCHOR_MATCHER.sub(replace, article_text)

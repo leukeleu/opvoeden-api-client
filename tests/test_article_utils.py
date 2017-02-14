@@ -45,3 +45,33 @@ class TextReplacePlaceholders(unittest.TestCase):
             'jgzs': 'centra',
             'de jgzs': 'de centra'
         }))
+
+
+class TestReplaceLinks(unittest.TestCase):
+    def test_replace_links(self):
+        external_id_to_href = {
+            '1': '/example/',
+            '2': '/example/more/'
+        }
+
+        def get_link(external_id, link_text):
+            """
+            Get the url for an article and return an HTML snippet
+            that links to this url with the given text.
+
+            """
+            href = external_id_to_href.get(external_id, None)
+            if href:
+                return '<a href="{}">{}</a>'.format(href, link_text)
+
+        example_text = textwrap.dedent('''
+            <p>This is an [a=1,example], do you need [a=2,more information]?</p>
+            <p>The next link is [a=3,not replaced]</p>
+            ''')
+
+        expected = textwrap.dedent('''
+            <p>This is an <a href="/example/">example</a>, do you need <a href="/example/more/">more information</a>?</p>
+            <p>The next link is [a=3,not replaced]</p>
+            ''')
+
+        self.assertEqual(expected, article_utils.replace_links(example_text, get_link))
