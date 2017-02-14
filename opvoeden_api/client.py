@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 import requests
 
-from . import models
+from . import __version__, models
 
 try:
     from urllib.parse import urljoin
@@ -16,6 +16,8 @@ class Client(object):
     def __init__(self, api_key, base_url=None, session=None):
         self.base_url = base_url or BASE_URL
         self.session = session or requests.Session()
+        self.session.headers['User-agent'] = 'opvoeden-api-client/{} ({})'.format(
+            __version__, requests.utils.default_user_agent())
         self.session.headers['Authorization'] = api_key
 
     def get(self, path, object_hook=None):

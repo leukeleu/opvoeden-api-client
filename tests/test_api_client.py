@@ -19,11 +19,17 @@ def mock_session():
     return session
 
 
-class TestAPIAuthorizationHeader(unittest.TestCase):
-    def test_client_sets_header(self):
+class TestAPIHeaders(unittest.TestCase):
+    def test_client_sets_authorization(self):
         session = mock_session()
         client.Client(API_KEY, session=session)
         self.assertEqual(API_KEY, session.headers['Authorization'])
+
+    def test_client_sets_user_agent(self):
+        session = mock_session()
+        client.Client(API_KEY, session=session)
+        self.assertRegexpMatches(
+            session.headers['User-agent'], r'opvoeden-api-client/.+? \(python-requests/.+?\)')
 
 
 class TestAPIClientEndpoints(unittest.TestCase):
