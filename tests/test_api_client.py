@@ -1,7 +1,5 @@
 from __future__ import unicode_literals
 
-import io
-import os
 import unittest
 
 import mock
@@ -10,15 +8,9 @@ import requests_mock
 
 from opvoeden_api import client, models
 
+from . import utils
+
 API_KEY = 'this-is-not-a-real-api-key'
-BASE_DIR = os.path.dirname(__file__)
-
-
-def data(fname):
-    """Return the content of a file in the tests/data dir as a unicode string."""
-    path = os.path.join(BASE_DIR, 'data', fname)
-    with io.open(path, encoding='utf-8') as f:
-        return f.read()
 
 
 def mock_session():
@@ -63,7 +55,7 @@ class TestAPIClientResponses(unittest.TestCase):
 
     def test_contentset(self):
         with requests_mock.Mocker() as m:
-            m.get('https://example.com/contentset', text=data('contentset_list.json'))
+            m.get('https://example.com/contentset', text=utils.data('contentset_list.json'))
             response = self.client.contentset()
         self.assertTrue(
             all(isinstance(obj, models.ContentSet) for obj in response),
@@ -71,7 +63,7 @@ class TestAPIClientResponses(unittest.TestCase):
 
     def test_contentset_with_id(self):
         with requests_mock.Mocker() as m:
-            m.get('https://example.com/contentset/1', text=data('contentset_detail.json'))
+            m.get('https://example.com/contentset/1', text=utils.data('contentset_detail.json'))
             response = self.client.contentset(1)
         self.assertTrue(
             all(isinstance(obj, models.Article) for obj in response),
@@ -79,12 +71,12 @@ class TestAPIClientResponses(unittest.TestCase):
 
     def test_article(self):
         with requests_mock.Mocker() as m:
-            m.get('https://example.com/article/1', text=data('article.json'))
+            m.get('https://example.com/article/1', text=utils.data('article.json'))
             response = self.client.article(1)
         self.assertIsInstance(response, models.Article)
 
     def test_image(self):
         with requests_mock.Mocker() as m:
-            m.get('https://example.com/image/1', text=data('image.json'))
+            m.get('https://example.com/image/1', text=utils.data('image.json'))
             response = self.client.image(1)
         self.assertIsInstance(response, models.Image)
