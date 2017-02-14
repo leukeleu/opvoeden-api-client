@@ -2,7 +2,9 @@ from __future__ import unicode_literals
 
 import posixpath
 
+from collections import defaultdict, deque
 from datetime import datetime
+from operator import attrgetter
 
 try:
     from urllib.parse import urlsplit
@@ -34,6 +36,38 @@ class ContentSet(object):
             ' name={self.name!r}, description=...,'
             ' is_default={self.is_default!r})'
         ).format(name=self.__class__.__name__, self=self)
+
+
+class ArticleNode(object):
+    def __init__(self, article=None):
+        self.article = article
+        self._children = []
+
+    @property
+    def children(self):
+        return self._children
+
+    def append_child(self, node):
+        self._children.append(node)
+
+    @classmethod
+    def from_list(cls, article_list):
+        article_map = defaultdict(list)
+        for article in article_list:
+            article_map[article.parent_reference].append(article)
+
+        root = ArticleNode()
+        stack = deque([('', root)])
+        while stack:
+            external_reference, parent_node = stack.popleft()
+            for article in sorted(article_map[external_reference], key=attrgetter('position')):
+                child_node = ArticleNode(article)
+                parent_node.append_child(child_node)
+                stack.appendleft((article.external_reference, child_node))
+        return root
+
+    def __repr__(self):
+        return '{name}(article={self.article!r})'.format(name=self.__class__.__name__, self=self)
 
 
 class Article(object):

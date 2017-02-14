@@ -1,9 +1,12 @@
 from __future__ import unicode_literals
 
 import datetime
+import json
 import unittest
 
 from opvoeden_api import models
+
+from . import utils
 
 
 class TestModelRepr(unittest.TestCase):
@@ -27,6 +30,10 @@ class TestModelRepr(unittest.TestCase):
             r" parent_reference=u?'', position=1,"
             r" last_change_date=..., canonicaltag=...\)$")
 
+    def test_article_node(self):
+        obj = models.ArticleNode()
+        self.assertEqual('ArticleNode(article=None)', repr(obj))
+
     def test_image(self):
         obj = models.Image(
             image_id=1, data='R0lGODlhAQABAIAAAP///wAAACwAAAAAAQABAAACAkQBADs=',
@@ -49,3 +56,30 @@ class TestArticle(unittest.TestCase):
 
     def test_slug(self):
         self.assertEqual('bar', self.article.slug)
+
+
+class TestArticleNode(unittest.TestCase):
+    def setUp(self):
+        data = utils.data('contentset_detail.json')
+        article_list = json.loads(data, object_hook=models.Article.from_dict)
+        self.tree = models.ArticleNode.from_list(article_list)
+
+    def test_root_has_no_article(self):
+        self.assertIsNone(self.tree.article, 'Root node article should be None')
+
+    def test_nesting(self):
+        root = self.tree
+        self.assertEqual(len(root.children), 1, 'Expected root node to have 1 child')
+        self.assertEqual('/article/', root.children[0].article.path)
+
+        child = root.children[0]
+        self.assertEqual(len(child.children), 2, 'Expected first child node to have 2 children')
+        self.assertEqual('/article/more/', child.children[0].article.path)
+        self.assertEqual('/article/extra/', child.children[1].article.path)
+
+        grandchild = child.children[0]
+        self.assertEqual(len(grandchild.children), 0, 'Expected first grandchild node to have 0 children')
+
+        grandchild = child.children[1]
+        self.assertEqual(len(grandchild.children), 1, 'Expected second grandchild node to have 1 child')
+        self.assertEqual('/article/extra/deep/', grandchild.children[0].article.path)
