@@ -21,7 +21,7 @@ def replace_placeholders(article_text, substitutions=None):
     Replace all JGZ placeholders in the article text with the
     appropriate strings.
 
-    Use the optional `substitutions` argument to override
+    Use the optional ``substitutions`` argument to override
     any of the default substitution strings.
 
     """
