@@ -54,7 +54,7 @@ class TestReplaceLinks(unittest.TestCase):
             '2': '/example/more/'
         }
 
-        def get_link(external_id, link_text):
+        def get_link_tag(external_id, link_text):
             """
             Get the url for an article and return an HTML snippet
             that links to this url with the given text.
@@ -74,4 +74,4 @@ class TestReplaceLinks(unittest.TestCase):
             <p>The next link is [a=3,not replaced]</p>
             ''')
 
-        self.assertEqual(expected, article_utils.replace_links(example_text, get_link))
+        self.assertEqual(expected, article_utils.replace_links(example_text, get_link_tag))
