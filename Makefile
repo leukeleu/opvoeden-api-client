@@ -1,6 +1,6 @@
-.PHONY: test unittests coveragetest flaketest coverage
+.PHONY: test unittests coveragetest flaketest checkmanifest coverage
 
-test: coveragetest flaketest setuptest
+test: coveragetest flaketest setuptest checkmanifest
 
 unittests:
 	# Run unit tests with coverage
@@ -16,6 +16,10 @@ flaketest:
 
 setuptest:
 	python setup.py check -vmrs
+
+checkmanifest:
+	# Check if all files are included in the sdist
+	check-manifest
 
 coverage: unittests
 	# Generate test coverage html report
