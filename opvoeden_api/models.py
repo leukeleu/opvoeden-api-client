@@ -25,6 +25,7 @@ class ContentSet(object):
 
     @classmethod
     def from_dict(cls, data):
+        """Create a ContentSet instance from the API response data"""
         return cls(
             contentset_id=data['id'],
             name=data['name'],
@@ -53,6 +54,7 @@ class ArticleNode(object):
 
     @classmethod
     def from_list(cls, article_list):
+        """Create a ArticleNode tree from a list of Article instances"""
         article_map = defaultdict(list)
         for article in article_list:
             article_map[article.parent_reference].append(article)
@@ -99,6 +101,7 @@ class Article(object):
 
     @classmethod
     def from_dict(cls, data):
+        """Create an Article instance from the API response data"""
         return cls(
             external_reference=data['externalReference'],
             short_title=data['shortTitle'],
@@ -129,6 +132,7 @@ class Image(object):
 
     @classmethod
     def from_dict(cls, data):
+        """Create an Image instance from the API response data"""
         return cls(
             image_id=data['imageID'],
             data=data['data'],
@@ -137,6 +141,7 @@ class Image(object):
             creation_date=datetime.strptime(data['creationDate'], DATE_FORMAT).date())
 
     def as_binary(self):
+        """"Convert the base64 encoded image data to binary"""
         return base64.decodestring(self.data)
 
     def __repr__(self):
