@@ -16,7 +16,7 @@ SUBSTITUTION_DEFAULTS = {
 }
 
 
-def replace_placeholders(article_text, substitutions=None):
+def replace_jgz(article_text, substitutions=None):
     """
     Replace all JGZ placeholders in the article text with the
     appropriate strings.

@@ -17,7 +17,7 @@ Je kunt altijd bij een van {de jgzs} terecht. Neem daarvoor contact op met {het 
 '''
 
 
-class TextReplacePlaceholders(unittest.TestCase):
+class TextReplaceJgz(unittest.TestCase):
     def test_default_replacements(self):
         expected = textwrap.dedent('''
             <h2>Centrum voor Jeugd en Gezin (CJG)</h2>
@@ -27,7 +27,7 @@ class TextReplacePlaceholders(unittest.TestCase):
 
             <p>Only specific strings between {accolades} are placeholders.</p>
             ''')
-        self.assertEqual(expected, article_utils.replace_placeholders(EXAMPLE_TEXT))
+        self.assertEqual(expected, article_utils.replace_jgz(EXAMPLE_TEXT))
 
     def test_substitutions_override(self):
         expected = textwrap.dedent('''
@@ -38,7 +38,7 @@ class TextReplacePlaceholders(unittest.TestCase):
 
             <p>Only specific strings between {accolades} are placeholders.</p>
             ''')
-        self.assertEqual(expected, article_utils.replace_placeholders(EXAMPLE_TEXT, substitutions={
+        self.assertEqual(expected, article_utils.replace_jgz(EXAMPLE_TEXT, substitutions={
             'Jgz': 'CJG',
             'het jgz': 'het CJG',
             'Het jgz': 'Het CJG',
