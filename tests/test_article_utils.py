@@ -108,3 +108,30 @@ class TestReplaceImages(unittest.TestCase):
             ''')
 
         self.assertEqual(expected, article_utils.replace_images(example_text, get_image_tag))
+
+
+class TestReplaceVideos(unittest.TestCase):
+    def test_replace_videos_with_links(self):
+
+        def get_video_link(video_id, embed_url, external_url):
+            """Create a link to the video player on opvoeden.nl"""
+            return '<iframe src="{}">'.format(embed_url)
+
+        example_text = '<p>[bvid=1]</p>'
+
+        expected = '<p><iframe src="//players.brightcove.net/2376984126001/default_default/index.html?videoId=1"></p>'
+
+        self.assertEqual(expected, article_utils.replace_videos(example_text, get_video_link))
+
+    def test_replace_videos_with_embeds(self):
+
+        def get_video_embed(video_id, embed_url, external_url):
+            """Create an iframe to embed the video"""
+            return '<a href="{}" target="_blank">Watch the video</a>'.format(
+                external_url.format(1))
+
+        example_text = '<p>[bvid=1]</p>'
+
+        expected = '<p><a href="https://www.opvoeden.nl/videoplayer/?artikel=1&BVID=1" target="_blank">Watch the video</a></p>'
+
+        self.assertEqual(expected, article_utils.replace_videos(example_text, get_video_embed))

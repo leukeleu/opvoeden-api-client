@@ -206,7 +206,7 @@ For example::
 Replace image placeholders
 --------------------------
 
-To replace `image placeholders`_ use ``replace_links``
+To replace `image placeholders`_ use ``replace_images``
 with a replacement callback.
 
 The replacement callback is called with the ``external_id``
@@ -231,6 +231,39 @@ For example::
     image endpoint of the API.
 
 
+
+Replace video placeholders
+--------------------------
+
+To replace `Brightcove video placeholders`_ use ``replace_videos``
+with a replacement callback.
+
+The replacement callback is called with the ``external_id``
+and ``video_id``, ``embed_url`` and ``external_url`` for each internal link.
+If the replacement callback returns anything other than ``None`` the link is
+replaced with the return value.
+
+.. important:: The ``external_url`` parameter is a link to a
+    video player on https://www.opvoeden.nl/. This link requires
+    an article id. It's the responsibility of the ``replacement_callback``
+    to fill in this parameter.
+
+Some examples::
+
+        def get_video_link(video_id, embed_url, external_url):
+            """Create a link to the video player on opvoeden.nl"""
+            return '<iframe src="{}">'.format(embed_url)
+
+        def get_video_embed(video_id, embed_url, external_url):
+            """Create an iframe to embed the video"""
+            return '<a href="{}" target="_blank">Watch the video</a>'.format(
+                external_url.format(article.external_reference))
+
+
+.. hint:: The replacement callback is an excellent place call the
+    image endpoint of the API.
+
+
 .. _`stichtingopvoeden.nl`: https://stichtingopvoeden.nl/
 .. _`API version 1`: https://documentatie.beheerportaalgemeenten.nl/rest-api/versie-1/
 .. _`/rest/v1/contentset`: https://documentatie.beheerportaalgemeenten.nl/rest-api/versie-1/de-contentset-service/
@@ -241,3 +274,4 @@ For example::
 .. _`JGZ placeholders`: https://documentatie.beheerportaalgemeenten.nl/rest-api/versie-1/de-artikeltekst/
 .. _`internal link placeholders`: https://documentatie.beheerportaalgemeenten.nl/rest-api/versie-1/de-artikeltekst/
 .. _`image placeholders`: https://documentatie.beheerportaalgemeenten.nl/rest-api/versie-1/de-artikeltekst/
+.. _`Brightcove video placeholders`: https://documentatie.beheerportaalgemeenten.nl/rest-api/versie-1/de-artikeltekst/

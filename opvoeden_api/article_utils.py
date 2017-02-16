@@ -72,3 +72,25 @@ def replace_images(article_text, replacement_callback):
         return match.group(0) if replacement is None else replacement
 
     return IMG_MATCHER.sub(replace, article_text)
+
+
+BVID_MATCHER = re.compile('\[bvid=([0-9]+)\]')
+
+
+def replace_videos(article_text, replacement_callback):
+    """
+    Replace all Brightcove video placeholders with
+    the return value of ``replacement_callback``.
+
+    If ``replacement_callback`` returns ``None``
+    no substitution will take place.
+
+    """
+    def replace(match):
+        video_id = match.group(1)
+        embed_url = '//players.brightcove.net/2376984126001/default_default/index.html?videoId={}'.format(video_id)
+        external_url = 'https://www.opvoeden.nl/videoplayer/?artikel={{}}&BVID={}'.format(video_id)
+        replacement = replacement_callback(video_id, embed_url, external_url)
+        return match.group(0) if replacement is None else replacement
+
+    return BVID_MATCHER.sub(replace, article_text)
