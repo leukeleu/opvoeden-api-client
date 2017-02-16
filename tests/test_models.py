@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 import datetime
 import json
+import random
 import unittest
 
 from opvoeden_api import models
@@ -69,7 +70,7 @@ class TestArticleNode(unittest.TestCase):
 
     def test_nesting(self):
         root = self.tree
-        self.assertEqual(len(root.children), 1, 'Expected root node to have 1 child')
+        self.assertEqual(len(root.children), 2, 'Expected root node to have 1 child')
         self.assertEqual('/article/', root.children[0].article.path)
 
         child = root.children[0]
@@ -83,3 +84,19 @@ class TestArticleNode(unittest.TestCase):
         grandchild = child.children[1]
         self.assertEqual(len(grandchild.children), 1, 'Expected second grandchild node to have 1 child')
         self.assertEqual('/article/extra/deep/', grandchild.children[0].article.path)
+
+    def test_iterator(self):
+        self.assertEqual([1, 2, 3, 4, 5], [node.article.external_reference for node in self.tree if node.article])
+
+
+class TestArticleNodeRandomOrder(unittest.TestCase):
+    """
+    Tree building and iteration still works if the article
+    list is shuffled.
+
+    """
+    def setUp(self):
+        data = utils.data('contentset_detail.json')
+        article_list = json.loads(data, object_hook=models.Article.from_dict)
+        random.shuffle(article_list)
+        self.tree = models.ArticleNode.from_list(article_list)

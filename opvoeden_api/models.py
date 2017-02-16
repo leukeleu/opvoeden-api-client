@@ -66,6 +66,12 @@ class ArticleNode(object):
                 stack.appendleft((article.external_reference, child_node))
         return root
 
+    def __iter__(self):
+        yield self
+        for child in self.children:
+            for node in child:
+                yield node
+
     def __repr__(self):
         return '{name}(article={self.article!r})'.format(name=self.__class__.__name__, self=self)
 

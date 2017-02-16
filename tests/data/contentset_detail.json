@@ -38,5 +38,25 @@
     "position": 1,
     "lastChangeDate": "20170214",
     "externalReference": 4
+  },
+  {
+    "parentReference": "",
+    "articleText": "Sibling body text",
+    "canonicaltag": "https://example.com/sibling/",
+    "shortTitle": "Short title",
+    "title": "Long article title",
+    "position": 1,
+    "lastChangeDate": "20170216",
+    "externalReference": 5
+  },
+  {
+    "parentReference": "5",
+    "articleText": "More sibling body text",
+    "canonicaltag": "https://example.com/sibling/more/",
+    "shortTitle": "Short title",
+    "title": "Long article title",
+    "position": 1,
+    "lastChangeDate": "20170216",
+    "externalReference": 6
   }
 ]
