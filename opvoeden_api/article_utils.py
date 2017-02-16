@@ -36,19 +36,19 @@ def replace_placeholders(article_text, substitutions=None):
 ANCHOR_MATCHER = re.compile('\[a=([0-9]+),(.+?)\]')
 
 
-def replace_links(article_text, replacement_function):
+def replace_links(article_text, replacement_callback):
     """
-    Replace all internal links in the article text
-    with the return value of ``replacement_function``.
+    Replace all internal link placeholders in the article
+    text with the return value of ``replacement_callback``.
 
-    If ``replacement_function`` returns ``None``
+    If ``replacement_callback`` returns ``None``
     no substitution will take place.
 
     """
     def replace(match):
         external_id = match.group(1)
         link_text = match.group(2)
-        replacement = replacement_function(external_id, link_text)
+        replacement = replacement_callback(external_id, link_text)
         return match.group(0) if replacement is None else replacement
 
     return ANCHOR_MATCHER.sub(replace, article_text)
