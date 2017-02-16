@@ -100,3 +100,15 @@ class TestArticleNodeRandomOrder(unittest.TestCase):
         article_list = json.loads(data, object_hook=models.Article.from_dict)
         random.shuffle(article_list)
         self.tree = models.ArticleNode.from_list(article_list)
+
+
+class TestImage(unittest.TestCase):
+    def setUp(self):
+        self.image = models.Image(
+            image_id=1, data='R0lGODlhAQABAIAAAP///wAAACwAAAAAAQABAAACAkQBADs=',
+            content_type='image/gif', name='pixel.gif', creation_date=datetime.date.today())
+
+    def test_as_binary(self):
+        self.assertEqual(
+            b'GIF89a\x01\x00\x01\x00\x80\x00\x00\xff\xff\xff\x00\x00\x00,\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02D\x01\x00;',
+            self.image.as_binary())

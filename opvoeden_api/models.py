@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 
+import base64
 import posixpath
 
 from collections import defaultdict, deque
@@ -134,6 +135,9 @@ class Image(object):
             content_type=data['type'],
             name=data['name'],
             creation_date=datetime.strptime(data['creationDate'], DATE_FORMAT).date())
+
+    def as_binary(self):
+        return base64.decodestring(self.data)
 
     def __repr__(self):
         return (
