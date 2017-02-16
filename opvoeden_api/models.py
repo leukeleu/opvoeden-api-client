@@ -142,7 +142,7 @@ class Image(object):
 
     def as_binary(self):
         """"Convert the base64 encoded image data to binary"""
-        return base64.decodestring(self.data)
+        return base64.decodestring(self.data.encode('ascii'))
 
     def __repr__(self):
         return (
