@@ -89,7 +89,19 @@ class TestArticleNode(unittest.TestCase):
         self.assertEqual([1, 2, 3, 4, 5], [node.article.external_reference for node in self.tree if node.article])
 
 
-class TestArticleNodeRandomOrder(unittest.TestCase):
+class TestArticleNodeReversedOrder(TestArticleNode):
+    """
+    Tree building and iteration still works if the article
+    list is reversed.
+
+    """
+    def setUp(self):
+        data = utils.data('contentset_detail.json')
+        article_list = json.loads(data, object_hook=models.Article.from_dict)
+        self.tree = models.ArticleNode.from_list(reversed(article_list))
+
+
+class TestArticleNodeRandomOrder(TestArticleNode):
     """
     Tree building and iteration still works if the article
     list is shuffled.
