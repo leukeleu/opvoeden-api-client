@@ -98,7 +98,8 @@ class TestArticleNodeRandomOrder(unittest.TestCase):
     def setUp(self):
         data = utils.data('contentset_detail.json')
         article_list = json.loads(data, object_hook=models.Article.from_dict)
-        random.shuffle(article_list)
+        rand = random.Random(42)
+        rand.shuffle(article_list)
         self.tree = models.ArticleNode.from_list(article_list)
 
 
