@@ -52,3 +52,23 @@ def replace_links(article_text, replacement_callback):
         return match.group(0) if replacement is None else replacement
 
     return ANCHOR_MATCHER.sub(replace, article_text)
+
+
+IMG_MATCHER = re.compile('\[img=([0-9]+)\]')
+
+
+def replace_images(article_text, replacement_callback):
+    """
+    Replace all image placeholders in the article
+    text with the return value of ``replacement_callback``.
+
+    If ``replacement_callback`` returns ``None``
+    no substitution will take place.
+
+    """
+    def replace(match):
+        external_id = match.group(1)
+        replacement = replacement_callback(external_id)
+        return match.group(0) if replacement is None else replacement
+
+    return IMG_MATCHER.sub(replace, article_text)

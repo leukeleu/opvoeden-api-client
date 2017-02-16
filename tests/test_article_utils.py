@@ -75,3 +75,36 @@ class TestReplaceLinks(unittest.TestCase):
             ''')
 
         self.assertEqual(expected, article_utils.replace_links(example_text, get_link_tag))
+
+
+class TestReplaceImages(unittest.TestCase):
+    def test_replace_images(self):
+        image_id_to_src = {
+            '1': '/media/1.gif',
+            '2': '/media/2.gif'
+        }
+
+        def get_image_tag(image_id):
+            src = image_id_to_src.get(image_id, None)
+            if src:
+                return '<img src="{}">'.format(src)
+
+        example_text = textwrap.dedent('''
+            <p>Look at this image:
+                [img=1]</p>
+
+            <p>[img=2] is the best image</p>
+
+            <p>[img=3] is not replaced</p>
+            ''')
+
+        expected = textwrap.dedent('''
+            <p>Look at this image:
+                <img src="/media/1.gif"></p>
+
+            <p><img src="/media/2.gif"> is the best image</p>
+
+            <p>[img=3] is not replaced</p>
+            ''')
+
+        self.assertEqual(expected, article_utils.replace_images(example_text, get_image_tag))
