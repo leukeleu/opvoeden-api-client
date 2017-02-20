@@ -65,18 +65,18 @@ An ``ArticleNode`` has the following properties:
     A ``list`` of ``ArticleNode`` instances of which the current node
     is the parent.
 
-It is possible to iterator over an article node. This will traverse the
+It is possible to iterate over an article node. This will traverse the
 entire tree in a depth first order. So, for example, to get a flat list
 of all the articles in a tree one could do this::
 
-    root = client.contentset(1)
-    articles = [node.article for node in root if node.article]
+    tree = client.contentset(1)
+    articles = [node.article for node in tree if node.article]
 
 
 ``Article``
 -----------
 
-The ``article(external_refrence)`` method returns a single ``Article``
+The ``article(external_reference)`` method returns a single ``Article``
 instance. Another way to get an ``Article`` object is by accessing
 the ``article`` property of an ``ArticleNode``.
 
@@ -98,8 +98,8 @@ In addition to these fields the ``Article`` object also
 provides these properties:
 
 ``path``
-    The url of the article. This is equal to the ``canonicaltag``
-    but ``schema://domain`` prefix is stripped.
+    The url of the article. This is identical to the ``canonicaltag``
+    but the ``schema://domain`` prefix is stripped.
 ``slug``
     The last element of the path. i.e. if ``path`` is ``'/foo/bar/'``
     then ``slug`` will be ``'bar'``.
@@ -146,7 +146,7 @@ Replace JGZ placeholders
 ------------------------
 
 To replace `JGZ placeholders`_ with appropriate strings use
-``replace_placeholders``.
+``replace_jgz``.
 
 By default these are the substitutions:
 
@@ -164,7 +164,7 @@ Het jgz      Het Centrum voor Jeugd en Gezin (CJG)
 ===========  =====================================
 
 To override any of the substitutions use the optional
-``substitutions`` argument to ``replace_placeholders`` i.e.::
+``substitutions`` argument to ``replace_jgz`` i.e.::
 
     replace_jgz(article_text, substitutions={
         'jgz': 'centrum voor Jeugd en Gezin'
@@ -178,9 +178,10 @@ To replace `internal link placeholders`_ use ``replace_links``
 with a replacement callback.
 
 The replacement callback is called with the ``external_id``
-and ``link_text`` for each internal link. If the replacement
-callback returns anything other than ``None`` the link is
-replaced with the return value.
+and ``link_text`` for each placeholder in the article text.
+
+If the replacement callback returns anything other than ``None``
+the link is replaced with the return value.
 
 For example::
 
@@ -202,17 +203,17 @@ For example::
     replace_links(article_text, get_link)
 
 
-
 Replace image placeholders
 --------------------------
 
 To replace `image placeholders`_ use ``replace_images``
 with a replacement callback.
 
-The replacement callback is called with the ``external_id``
-and ``link_text`` for each internal link. If the replacement
-callback returns anything other than ``None`` the link is
-replaced with the return value.
+The replacement callback is called with the ``image_id``
+for each placeholder in the article text.
+
+If the replacement callback returns anything other than ``None``
+the placeholder is replaced with the return value.
 
 For example::
 
@@ -231,17 +232,17 @@ For example::
     image endpoint of the API.
 
 
-
 Replace video placeholders
 --------------------------
 
 To replace `Brightcove video placeholders`_ use ``replace_videos``
 with a replacement callback.
 
-The replacement callback is called with the ``external_id``
-and ``video_id``, ``embed_url`` and ``external_url`` for each internal link.
-If the replacement callback returns anything other than ``None`` the link is
-replaced with the return value.
+The replacement callback is called with the ``video_id``, ``embed_url``
+and ``external_url`` for each placeholder in the article text.
+
+If the replacement callback returns anything other than ``None``
+the placeholder is replaced with the return value.
 
 .. important:: The ``external_url`` parameter is a link to a
     video player on https://www.opvoeden.nl/. This link requires
@@ -256,6 +257,7 @@ Some examples::
 
         def get_video_embed(video_id, embed_url, external_url):
             """Create an iframe to embed the video"""
+            # It is assumed that ``article`` comes from the outer scope
             return '<a href="{}" target="_blank">Watch the video</a>'.format(
                 external_url.format(article.external_reference))
 
