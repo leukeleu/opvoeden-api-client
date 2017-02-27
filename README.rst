@@ -73,6 +73,20 @@ of all the articles in a tree one could do this::
     articles = [node.article for node in tree if node.article]
 
 
+To recurse over the tree use the children property::
+
+    def visit(node, parent=None):
+        """
+        Visit each node in the tree.
+        """
+        # do something with node, then recurse
+        for child in node.children:
+            visit(child, node)
+
+    tree = client.contentset(1)
+    visit(tree)
+
+
 ``Article``
 -----------
 
@@ -94,6 +108,11 @@ An ``Article`` has the following properties:
 Refer to the `API data types docs`_ for more information on
 these fields.
 
+.. note:: The ``article_text`` of ``Articles`` retrieved from the
+    ``contentset`` endpoint can contain several placeholder strings.
+    This library provides a number of `utilities`__
+    to deal with those.
+
 In addition to these fields the ``Article`` object also
 provides these properties:
 
@@ -103,11 +122,6 @@ provides these properties:
 ``slug``
     The last element of the path. i.e. if ``path`` is ``'/foo/bar/'``
     then ``slug`` will be ``'bar'``.
-
-.. note:: The ``article_text`` of ``Articles`` retrieved from the `
-    `contentset`` endpoint can contain several placeholder strings.
-    This library provides a number of `utilities`__
-    to deal with those.
 
 ``Image``
 ---------
@@ -124,11 +138,14 @@ instance.
 Refer to the `API data types docs`_ for more information on
 these fields.
 
-In addition to these fields the ``Image`` object also provides
-an ``as_binary`` method. This method converts to base64
-encoded value of the ``data`` property to binary.
-The return value of this method can be used to store images
-on a file system.
+Converting image data to binary
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The ``Image`` object also provides an ``as_binary`` method.
+
+This method converts to base64 encoded value of the ``data``
+property to binary. The return value of this method can be used
+to store images on a file system.
 
 __
 
@@ -251,19 +268,22 @@ the placeholder is replaced with the return value.
 
 Some examples::
 
-        def get_video_link(video_id, embed_url, external_url):
-            """Create a link to the video player on opvoeden.nl"""
-            return '<iframe src="{}">'.format(embed_url)
-
         def get_video_embed(video_id, embed_url, external_url):
             """Create an iframe to embed the video"""
-            # It is assumed that ``article`` comes from the outer scope
+            return '<iframe src="{}">'.format(embed_url)
+
+
+        def get_video_link(article, video_id, embed_url, external_url):
+            """Create a link to the video player on opvoeden.nl"""
             return '<a href="{}" target="_blank">Watch the video</a>'.format(
                 external_url.format(article.external_reference))
 
 
-.. hint:: The replacement callback is an excellent place call the
-    image endpoint of the API.
+        # Loop through a list of articles and bind the current
+        # article to the first argument of get_video_link
+        for article in article_list:
+            _get_video_link = functools.partial(get_video_link, article)
+            replace_videos(article_text, _get_video_link)
 
 
 .. _`stichtingopvoeden.nl`: https://stichtingopvoeden.nl/
