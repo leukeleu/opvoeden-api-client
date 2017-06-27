@@ -35,7 +35,7 @@ class TestAPIHeaders(unittest.TestCase):
 class TestAPIClientEndpoints(unittest.TestCase):
     def setUp(self):
         self.session = mock_session()
-        self.session.get = mock. MagicMock()
+        self.session.get = mock.MagicMock()
         self.client = client.Client(API_KEY, base_url='https://example.com/', session=self.session)
 
     def test_contentset_list(self):
