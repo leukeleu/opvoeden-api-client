@@ -2,7 +2,7 @@
 Stichting Opvoeden API client
 #############################
 
-A client for the `stichtingopvoeden.nl`_ `API version 1`_.
+A client for the `stichtingopvoeden.nl`_ `API version 2`_.
 
 
 Usage
@@ -18,10 +18,10 @@ The client methods map to the following set of endpoints:
 ===============================  =======================================
 Method                           Endpoint
 ===============================  =======================================
-``contentset_list``              `/rest/v1/contentset`_
-``contentset(contentset_id)``    `/rest/v1/contentset/{id}`_
-``article(external_reference)``  `/rest/v1/article/{externalReference}`_
-``image(image_id)``              `/rest/v1/image/{id}`_
+``contentset_list``              `/rest/v2/contentset`_
+``contentset(contentset_id)``    `/rest/v2/contentset/{id}`_
+``article(external_reference)``  `/rest/v2/article/{externalReference}`_
+``image(image_id)``              `/rest/v2/image/{id}`_
 ===============================  =======================================
 
 .. note:: The ``contentset`` method does not support the ``changedAfter``
@@ -252,7 +252,7 @@ For example::
 Replace video placeholders
 --------------------------
 
-To replace `Brightcove video placeholders`_ use ``replace_videos``
+To replace `YouTube video placeholders`_ use ``replace_videos``
 with a replacement callback.
 
 The replacement callback is called with the ``video_id``, ``embed_url``
@@ -261,11 +261,6 @@ and ``external_url`` for each placeholder in the article text.
 If the replacement callback returns anything other than ``None``
 the placeholder is replaced with the return value.
 
-.. important:: The ``external_url`` parameter is a link to a
-    video player on https://www.opvoeden.nl/. This link requires
-    an article id. It's the responsibility of the ``replacement_callback``
-    to fill in this parameter.
-
 Some examples::
 
         def get_video_embed(video_id, embed_url, external_url):
@@ -273,27 +268,20 @@ Some examples::
             return '<iframe src="{}">'.format(embed_url)
 
 
-        def get_video_link(article, video_id, embed_url, external_url):
+        def get_video_link(video_id, embed_url, external_url):
             """Create a link to the video player on opvoeden.nl"""
             return '<a href="{}" target="_blank">Watch the video</a>'.format(
-                external_url.format(article.external_reference))
-
-
-        # Loop through a list of articles and bind the current
-        # article to the first argument of get_video_link
-        for article in article_list:
-            _get_video_link = functools.partial(get_video_link, article)
-            replace_videos(article_text, _get_video_link)
+                external_url)
 
 
 .. _`stichtingopvoeden.nl`: https://stichtingopvoeden.nl/
-.. _`API version 1`: https://documentatie.beheerportaalgemeenten.nl/rest-api/versie-1/
-.. _`/rest/v1/contentset`: https://documentatie.beheerportaalgemeenten.nl/rest-api/versie-1/de-contentset-service/
-.. _`/rest/v1/contentset/{id}`: https://documentatie.beheerportaalgemeenten.nl/rest-api/versie-1/de-contentset-service/
-.. _`/rest/v1/article/{externalReference}`: https://documentatie.beheerportaalgemeenten.nl/rest-api/versie-1/de-article-service/
-.. _`/rest/v1/image/{id}`: https://documentatie.beheerportaalgemeenten.nl/rest-api/versie-1/de-image-service/
+.. _`API version 2`: https://documentatie.beheerportaalgemeenten.nl/rest-api/versie-2/
+.. _`/rest/v2/contentset`: https://documentatie.beheerportaalgemeenten.nl/rest-api/versie-1/de-contentset-service/
+.. _`/rest/v2/contentset/{id}`: https://documentatie.beheerportaalgemeenten.nl/rest-api/versie-1/de-contentset-service/
+.. _`/rest/v2/article/{externalReference}`: https://documentatie.beheerportaalgemeenten.nl/rest-api/versie-1/de-article-service/
+.. _`/rest/v2/image/{id}`: https://documentatie.beheerportaalgemeenten.nl/rest-api/versie-1/de-image-service/
 .. _`API data types docs`: https://documentatie.beheerportaalgemeenten.nl/rest-api/versie-1/data-types/
 .. _`JGZ placeholders`: https://documentatie.beheerportaalgemeenten.nl/rest-api/versie-1/de-artikeltekst/
 .. _`internal link placeholders`: https://documentatie.beheerportaalgemeenten.nl/rest-api/versie-1/de-artikeltekst/
 .. _`image placeholders`: https://documentatie.beheerportaalgemeenten.nl/rest-api/versie-1/de-artikeltekst/
-.. _`Brightcove video placeholders`: https://documentatie.beheerportaalgemeenten.nl/rest-api/versie-1/de-artikeltekst/
+.. _`Youtube video placeholders`: https://documentatie.beheerportaalgemeenten.nl/rest-api/versie-2/youtube-video-s/
