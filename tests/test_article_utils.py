@@ -114,24 +114,24 @@ class TestReplaceVideos(unittest.TestCase):
     def test_replace_videos_with_links(self):
 
         def get_video_link(video_id, embed_url, external_url):
-            """Create a link to the video player on opvoeden.nl"""
+            """Create an iframe to embed the video"""
             return '<iframe src="{}">'.format(embed_url)
 
-        example_text = '<p>[bvid=1]</p>'
+        example_text = '<p>[youtube=1]</p>'
 
-        expected = '<p><iframe src="//players.brightcove.net/2376984126001/default_default/index.html?videoId=1"></p>'
+        expected = '<p><iframe src="//www.youtube-nocookie.com/embed/1?rel=0"></p>'
 
         self.assertEqual(expected, article_utils.replace_videos(example_text, get_video_link))
 
     def test_replace_videos_with_embeds(self):
 
         def get_video_embed(video_id, embed_url, external_url):
-            """Create an iframe to embed the video"""
+            """Create a link to the video player"""
             return '<a href="{}" target="_blank">Watch the video</a>'.format(
-                external_url.format(1))
+                external_url)
 
-        example_text = '<p>[bvid=1]</p>'
+        example_text = '<p>[youtube=1]</p>'
 
-        expected = '<p><a href="https://www.opvoeden.nl/videoplayer/?artikel=1&BVID=1" target="_blank">Watch the video</a></p>'
+        expected = '<p><a href="https://youtu.be/1" target="_blank">Watch the video</a></p>'
 
         self.assertEqual(expected, article_utils.replace_videos(example_text, get_video_embed))
