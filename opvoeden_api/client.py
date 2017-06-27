@@ -9,7 +9,7 @@ try:
 except ImportError:
     from urlparse import urljoin
 
-BASE_URL = 'https://api.stichtingopvoeden.nl/rest/v1/'
+BASE_URL = 'https://api.stichtingopvoeden.nl/rest/v2/'
 
 
 class Client(object):
