@@ -117,9 +117,9 @@ class TestReplaceVideos(unittest.TestCase):
             """Create an iframe to embed the video"""
             return '<iframe src="{}">'.format(embed_url)
 
-        example_text = '<p>[youtube=1]</p>'
+        example_text = '<p>[youtube=1-A-z_]</p>'
 
-        expected = '<p><iframe src="//www.youtube-nocookie.com/embed/1?rel=0"></p>'
+        expected = '<p><iframe src="//www.youtube-nocookie.com/embed/1-A-z_?rel=0"></p>'
 
         self.assertEqual(expected, article_utils.replace_videos(example_text, get_video_link))
 

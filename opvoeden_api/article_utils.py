@@ -74,7 +74,7 @@ def replace_images(article_text, replacement_callback):
     return IMG_MATCHER.sub(replace, article_text)
 
 
-BVID_MATCHER = re.compile('\[youtube=([0-9]+)\]')
+YOUTUBE_MATCHER = re.compile('\[youtube=([0-9A-z_-]+)\]')
 
 
 def replace_videos(article_text, replacement_callback):
@@ -93,4 +93,4 @@ def replace_videos(article_text, replacement_callback):
         replacement = replacement_callback(video_id, embed_url, external_url)
         return match.group(0) if replacement is None else replacement
 
-    return BVID_MATCHER.sub(replace, article_text)
+    return YOUTUBE_MATCHER.sub(replace, article_text)
