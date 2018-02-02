@@ -47,7 +47,7 @@ def replace_links(article_text, replacement_callback):
     """
     def replace(match):
         external_id = match.group(1)
-        link_text = match.group(2)
+        link_text = match.group(2).encode('utf-8')
         replacement = replacement_callback(external_id, link_text)
         return match.group(0) if replacement is None else replacement
 
