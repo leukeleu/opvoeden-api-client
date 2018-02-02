@@ -6,7 +6,6 @@ import unittest
 
 from opvoeden_api import article_utils
 
-
 EXAMPLE_TEXT = '''
 <h2>{Jgz}</h2>
 
@@ -65,7 +64,7 @@ class TestReplaceLinks(unittest.TestCase):
                 return '<a href="{}">{}</a>'.format(href, link_text)
 
         example_text = textwrap.dedent('''
-            <p>This is an [a=1,example], do you need [a=2,more information]?</p>
+            <p>This is an [a=1,example], do you need [a=2,more information🤓]?</p>
             <p>The next link is [a=3,not replaced]</p>
             ''')
 
