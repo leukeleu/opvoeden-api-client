@@ -69,7 +69,7 @@ class TestReplaceLinks(unittest.TestCase):
             ''')
 
         expected = textwrap.dedent('''
-            <p>This is an <a href="/example/">example</a>, do you need <a href="/example/more/">more information</a>?</p>
+            <p>This is an <a href="/example/">example</a>, do you need <a href="/example/more/">more information🤓</a>?</p>
             <p>The next link is [a=3,not replaced]</p>
             ''')
 
