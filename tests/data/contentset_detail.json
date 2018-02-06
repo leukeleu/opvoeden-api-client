@@ -7,7 +7,8 @@
     "title": "Long article title",
     "position": 1,
     "lastChangeDate": "20170208",
-    "externalReference": 1
+    "externalReference": 1,
+    "tags": ["tag1", "tag3"]
   },
   {
     "parentReference": 1,
@@ -17,7 +18,8 @@
     "title": "Long article title",
     "position": 1,
     "lastChangeDate": "20170208",
-    "externalReference": 2
+    "externalReference": 2,
+    "tags": ["tag1", "tag2"]
   },
   {
     "parentReference": 1,
@@ -27,7 +29,8 @@
     "title": "Long article title",
     "position": 2,
     "lastChangeDate": "20170214",
-    "externalReference": 3
+    "externalReference": 3,
+    "tags": []
   },
   {
     "parentReference": 3,
@@ -37,7 +40,8 @@
     "title": "Long article title",
     "position": 1,
     "lastChangeDate": "20170214",
-    "externalReference": 4
+    "externalReference": 4,
+    "tags": ["tag2"]
   },
   {
     "parentReference": "",
@@ -47,7 +51,8 @@
     "title": "Long article title",
     "position": 2,
     "lastChangeDate": "20170216",
-    "externalReference": 5
+    "externalReference": 5,
+    "tags": ["tag1"]
   },
   {
     "parentReference": "5",
@@ -57,6 +62,7 @@
     "title": "Long article title",
     "position": 1,
     "lastChangeDate": "20170216",
-    "externalReference": 6
+    "externalReference": 6,
+    "tags": ["tag1", "tag2", "tag3"]
   }
 ]

@@ -104,6 +104,7 @@ An ``Article`` has the following properties:
 * ``position``
 * ``last_change_date``
 * ``canonicaltag``
+* ``tags``
 
 Refer to the `API data types docs`_ for more information on
 these fields.
