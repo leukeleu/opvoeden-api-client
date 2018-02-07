@@ -23,7 +23,8 @@ class TestModelRepr(unittest.TestCase):
         obj = models.Article(
             external_reference=1, short_title='Example', title='Example article',
             article_text='Example description', parent_reference='', position=1,
-            last_change_date=datetime.date.today(), canonicaltag='https://example.com/article/', tags={'tag1', 'tag2'})
+            last_change_date=datetime.date.today(), canonicaltag='https://example.com/article/',
+            tags=['tag1', 'tag2'])
         self.assertRegexpMatches(
             repr(obj),
             r"^Article\(external_reference=1, short_title=u?'Example',"
@@ -50,7 +51,8 @@ class TestArticle(unittest.TestCase):
         self.article = models.Article(
             external_reference=1, short_title='Example', title='Example article',
             article_text='Example description', parent_reference='', position=1,
-            last_change_date=datetime.date.today(), canonicaltag='https://example.com/foo/bar/', tags={'tag1', 'tag2'})
+            last_change_date=datetime.date.today(), canonicaltag='https://example.com/foo/bar/',
+            tags=['tag1', 'tag2'])
 
     def test_path(self):
         self.assertEqual('/foo/bar/', self.article.path)
