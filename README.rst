@@ -277,12 +277,12 @@ Some examples::
 
 .. _`stichtingopvoeden.nl`: https://stichtingopvoeden.nl/
 .. _`API version 2`: https://documentatie.beheerportaalgemeenten.nl/rest-api/versie-2/
-.. _`/rest/v2/contentset`: https://documentatie.beheerportaalgemeenten.nl/rest-api/versie-1/de-contentset-service/
-.. _`/rest/v2/contentset/{id}`: https://documentatie.beheerportaalgemeenten.nl/rest-api/versie-1/de-contentset-service/
-.. _`/rest/v2/article/{externalReference}`: https://documentatie.beheerportaalgemeenten.nl/rest-api/versie-1/de-article-service/
-.. _`/rest/v2/image/{id}`: https://documentatie.beheerportaalgemeenten.nl/rest-api/versie-1/de-image-service/
-.. _`API data types docs`: https://documentatie.beheerportaalgemeenten.nl/rest-api/versie-1/data-types/
-.. _`JGZ placeholders`: https://documentatie.beheerportaalgemeenten.nl/rest-api/versie-1/de-artikeltekst/
-.. _`internal link placeholders`: https://documentatie.beheerportaalgemeenten.nl/rest-api/versie-1/de-artikeltekst/
-.. _`image placeholders`: https://documentatie.beheerportaalgemeenten.nl/rest-api/versie-1/de-artikeltekst/
+.. _`/rest/v2/contentset`: https://documentatie.beheerportaalgemeenten.nl/rest-api/versie-2/de-contentset-service/
+.. _`/rest/v2/contentset/{id}`: https://documentatie.beheerportaalgemeenten.nl/rest-api/versie-2/de-contentset-service/
+.. _`/rest/v2/article/{externalReference}`: https://documentatie.beheerportaalgemeenten.nl/rest-api/versie-2/de-article-service/
+.. _`/rest/v2/image/{id}`: https://documentatie.beheerportaalgemeenten.nl/rest-api/versie-2/de-image-service/
+.. _`API data types docs`: https://documentatie.beheerportaalgemeenten.nl/rest-api/versie-2/data-types/
+.. _`JGZ placeholders`: https://documentatie.beheerportaalgemeenten.nl/rest-api/versie-2/de-artikeltekst/
+.. _`internal link placeholders`: https://documentatie.beheerportaalgemeenten.nl/rest-api/versie-2/de-artikeltekst/
+.. _`image placeholders`: https://documentatie.beheerportaalgemeenten.nl/rest-api/versie-2/de-artikeltekst/
 .. _`Youtube video placeholders`: https://documentatie.beheerportaalgemeenten.nl/rest-api/versie-2/youtube-video-s/
