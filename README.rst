@@ -275,6 +275,30 @@ Some examples::
                 external_url)
 
 
+Changes
+=======
+
+v2.1.0
+------
+
+- Expose article tags
+
+v2.0.1
+------
+
+- Fix YouTube url regex
+
+v2.0.0
+------
+
+- Use API version 2
+
+v1.0.0
+------
+
+- Initial release
+
+
 .. _`stichtingopvoeden.nl`: https://stichtingopvoeden.nl/
 .. _`API version 2`: https://documentatie.beheerportaalgemeenten.nl/rest-api/versie-2/
 .. _`/rest/v2/contentset`: https://documentatie.beheerportaalgemeenten.nl/rest-api/versie-2/de-contentset-service/
