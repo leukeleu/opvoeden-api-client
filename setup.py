@@ -4,7 +4,7 @@ from setuptools import find_packages, setup
 
 setup(
     name='opvoeden-api-client',
-    version='2.0.1',
+    version='2.1.0',
     description='Client for Stichting Opvoeden API V2',
     long_description=io.open('README.rst', encoding='utf-8').read(),
     keywords=['stichting', 'opvoeden', 'api', 'client', 'rest'],
