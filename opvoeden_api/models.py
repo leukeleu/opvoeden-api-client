@@ -81,7 +81,7 @@ class ArticleNode(object):
 
 class Article(object):
     def __init__(self, external_reference, short_title, title, article_text,
-                 parent_reference, position, last_change_date, canonicaltag):
+                 parent_reference, position, last_change_date, canonicaltag, tags):
         self.external_reference = external_reference
         self.short_title = short_title
         self.title = title
@@ -90,6 +90,7 @@ class Article(object):
         self.position = position
         self.last_change_date = last_change_date
         self.canonicaltag = canonicaltag
+        self.tags = tags
 
     @property
     def path(self):
@@ -110,7 +111,9 @@ class Article(object):
             parent_reference=data['parentReference'],
             position=data['position'],
             last_change_date=datetime.strptime(data['lastChangeDate'], DATE_FORMAT).date(),
-            canonicaltag=data['canonicaltag'])
+            canonicaltag=data['canonicaltag'],
+            tags=data['tags']
+        )
 
     def __repr__(self):
         return (
@@ -118,7 +121,7 @@ class Article(object):
             ' short_title={self.short_title!r}, title={self.title!r},'
             ' article_text=..., parent_reference={self.parent_reference!r},'
             ' position={self.position!r}, last_change_date=...,'
-            ' canonicaltag=...)'
+            ' canonicaltag=..., tags=...)'
         ).format(name=self.__class__.__name__, self=self)
 
 

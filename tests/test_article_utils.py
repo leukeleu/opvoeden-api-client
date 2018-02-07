@@ -6,7 +6,6 @@ import unittest
 
 from opvoeden_api import article_utils
 
-
 EXAMPLE_TEXT = '''
 <h2>{Jgz}</h2>
 
